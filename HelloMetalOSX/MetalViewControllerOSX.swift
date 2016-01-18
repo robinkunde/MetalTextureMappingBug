@@ -26,6 +26,8 @@ class MetalViewControllerOSX: NSViewController {
 
     weak var metalViewControllerDelegate: MetalViewControllerDelegateOSX?
 
+    let useLowPowerDevice = false
+
     override func loadView() {
         super.loadView()
 
@@ -37,7 +39,19 @@ class MetalViewControllerOSX: NSViewController {
 
         projectionMatrix = Matrix4.makePerspectiveViewAngle(Matrix4.degreesToRad(85.0), aspectRatio: Float(self.view.bounds.size.width / self.view.bounds.size.height), nearZ: 0.01, farZ: 100.0)
 
-        device = MTLCreateSystemDefaultDevice()
+        if (useLowPowerDevice) {
+            for dv in MTLCopyAllDevices() {
+                if (dv.lowPower) {
+                    device = dv
+                    print("Using low power device")
+                }
+            }
+        }
+        if (device == nil) {
+            device = MTLCreateSystemDefaultDevice()
+            print("Using default device")
+        }
+
         metalLayer = CAMetalLayer()
         metalLayer.device = device
         metalLayer.pixelFormat = .BGRA8Unorm
@@ -82,6 +96,10 @@ class MetalViewControllerOSX: NSViewController {
         CVDisplayLinkCreateWithActiveCGDisplays(&timer)
         CVDisplayLinkSetOutputCallback(timer!, displayLinkOutputCallback, UnsafeMutablePointer<Void>(unsafeAddressOf(self)))
         CVDisplayLinkStart(timer!)
+    }
+
+    override func viewDidAppear() {
+        view.window!.title = device.name!
     }
 
     override func viewDidLayout() {
