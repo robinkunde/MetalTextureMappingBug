@@ -8,7 +8,11 @@ I have another version that uses native GLKit bindings instead of OBJ-C bridging
 
 ### rMBP 15" Mid 2014 (NVIDIA GeForce GT 750M 2048 MB) OSX 10.11.2
 
-![OSX](https://raw.githubusercontent.com/robinkunde/MetalTextureMapping/master/OSX.png)
+![OSX](https://raw.githubusercontent.com/robinkunde/MetalTextureMapping/master/nv750m.png)
+
+### rMBP 15" Mid 2014 (Intel Iris Pro 1536 MB) OSX 10.11.2
+
+![OSX](https://raw.githubusercontent.com/robinkunde/MetalTextureMapping/master/irispro.png)
 
 ### iPhone 6+ iOS 9.2
 
